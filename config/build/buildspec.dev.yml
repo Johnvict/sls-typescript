@@ -1,0 +1,26 @@
+version: 0.2
+        
+phases:
+  install:
+    on-failure: ABORT
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing Serverless CLI
+      - npm i -g serverless@2
+      - echo Installing npm dependencies
+      - npm install
+  build:
+    on-failure: ABORT
+    commands:
+      - echo Running Tests
+      - npm test
+      - echo Packaging successful 
+      - serverless package --package my-artifact --stage dev
+artifacts:
+  files:
+    - my-artifact/*
+  name: NoteCrudArtifacts
+cache:
+  paths:
+    - 'node_modules/**/*'
